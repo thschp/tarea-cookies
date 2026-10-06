@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Tarea cookies</title>
+</head>
+<body>
+
+<form action="Servlet1" method="post" onsubmit="return validarFormulario()">
+Nombre: <input type="text" name="userName" id="userName"/><br/>
+Edad: <input type="number" name="age" id="age" min="1" max="120" /><br/>
+Género: <input type="radio" name="gender" value="Masculino"/>Masculino
+		<input type="radio" name="gender" value="Femenino"/>Femenino
+		<input type="radio" name="gender" value="Otro"/>Otro<br/>
+Email: <input type="email" name="email" id="email"/><br/>
+Número telefónico: <input type="tel" name="phone" id="phone"/><br/>
+<input type="submit" value="go"/>
+</form>
+
+<p id="mensajeError" style="color: red;"></p>
+
+<script>
+        function validarFormulario() {
+       		const regexText = /^[a-záéíóú\s]{2,50}$/i;
+       		const regexEmail = /^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,3}$/i; 
+       		const regexPhone = /^3\d{9,9}$/;
+       		const errores = [];
+       		
+        	const name = document.getElementById("userName").value.trim();
+        	const email = document.getElementById("email").value.trim();
+        	const phone = document.getElementById("phone").value.trim();
+        	
+        	var mensajeError = document.getElementById("mensajeError");
+        	
+        	if(!name || !email || !phone){
+        		mensajeError.innerText = "Por favor, complete todos los campos";
+        		return false;
+       		 }
+        	
+        	if (!regexText.test(name)) {
+        		errores.push("El nombre debe tener entre 2 y 50 caracteres. No se admiten caracteres especiales o números");
+        	}
+        	if (!regexEmail.test(email)) {
+                errores.push("El correo no tiene un formato válido.");
+            }
+        	if (!regexPhone.test(phone)) {
+                errores.push("El número de teléfono debe tener 10 dígitos y empezar por 3.");
+            }
+        	
+        	if (errores.length > 0) {
+        	mensajeError.innerText = errores.join("\n");
+        	return false;
+        	} else {
+        		mensajeError.innerText = "";
+        	}
+        }
+    </script>
+    
+</body>
+</html>
